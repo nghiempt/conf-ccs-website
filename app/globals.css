@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary-rgb: 77, 219, 134;
+  --secondary-rgb: 77, 219, 134;
+  --tertiary-rgb: 77, 219, 134;
+  --quaternary-rgb: 77, 219, 134;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.unshowscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.unshowscrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  position: relative;
+}
