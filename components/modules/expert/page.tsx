@@ -8,6 +8,7 @@ import Cookie from 'js-cookie';
 import { ROUTE } from "@/constant/route";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CloseIcon from '@mui/icons-material/Close';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 export default function Expert() {
@@ -25,12 +26,19 @@ export default function Expert() {
   const [isMounted, setIsMounted] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
 
-  const [labelOne, setLabelOne] = useState('');
-  const [labelTwo, setLabelTwo] = useState('');
-  const [relevantOne, setRelevantOne] = useState('');
-  const [labelOneDesc, setLabelOneDesc] = useState('');
-  const [labelTwoDesc, setLabelTwoDesc] = useState('');
-  const [relevantTwo, setRelevantTwo] = useState('');
+  const [labelOneS, setLabelOneS] = useState('');
+  const [labelTwoS, setLabelTwoS] = useState('');
+  const [relevantOneS, setRelevantOneS] = useState('');
+  const [labelOneDescS, setLabelOneDescS] = useState('');
+  const [labelTwoDescS, setLabelTwoDescS] = useState('');
+  const [relevantTwoS, setRelevantTwoS] = useState('');
+
+  const [labelOneC, setLabelOneC] = useState('');
+  const [labelTwoC, setLabelTwoC] = useState('');
+  const [relevantOneC, setRelevantOneC] = useState('');
+  const [labelOneDescC, setLabelOneDescC] = useState('');
+  const [labelTwoDescC, setLabelTwoDescC] = useState('');
+  const [relevantTwoC, setRelevantTwoC] = useState('');
 
   const handleCloseAlert = () => {
     setOpenAlert(false)
@@ -159,46 +167,26 @@ export default function Expert() {
 
   const splitDataSections = (data: any) => {
     const sections: any = {};
-
-    // Find the index where "Data Collect:" starts
     const collectIndex = data?.indexOf("Data Collect:");
-
-    // Extract the "Data Share" section using the starting index of "Data Collect:"
     sections.dataShare = data?.substring(0, collectIndex)?.trim();
-
-    // Extract the "Data Collect" section from the starting point till the end of the string
     sections.dataCollect = data?.substring(collectIndex)?.trim();
-
     return sections;
   }
 
   const splitDataSectionsNull = (data: any) => {
     const sections: any = {};
-
-    // Use a regular expression to find the start indices of each section
     const dataShareMatch = data?.match(/- Data Share:/);
     const dataCollectMatch = data?.match(/- Data Collect:/);
-
     if (dataShareMatch && dataCollectMatch) {
-      // Extract the "Data Share" section using the index of "Data Collect"
-      sections.dataShare = data?.substring(dataShareMatch.index, dataCollectMatch.index).trim();
-
-      // Extract the "Data Collect" section from its start index to the end of the string
-      sections.dataCollect = data?.substring(dataCollectMatch.index).trim();
+      sections.dataShare = data?.substring(dataShareMatch.index, dataCollectMatch.index)?.trim()?.replace(/-/g, '');
+      sections.dataCollect = data?.substring(dataCollectMatch.index).trim()?.replace(/-/g, '');
     } else {
-      // Handle the case where the expected headings aren't found
-      console.error("Could not find the expected data sections.");
       return null;
     }
-
     return sections;
   }
 
   const handleSubmit = async () => {
-    // console.log('------------------------------------');
-    // askGPT('What is the data safety of this app?');
-    // console.log('------------------------------------');
-    // return;
     if (!isSignedIn) {
       window.location.href = ROUTE.SIGN_IN;
       return;
@@ -207,15 +195,25 @@ export default function Expert() {
       account_id: JSON.parse(account || '')?.account_id,
       app_id: app?.app_id,
       category_id: app?.category_id,
-      label_one: labelOne,
-      label_two: labelTwo,
-      relevant_one: relevantOne,
-      label_one_desc: labelOneDesc,
-      label_two_desc: labelTwoDesc,
-      relevant_two: relevantTwo
+      label_one_s: labelOneS,
+      label_two_s: labelTwoS,
+      relevant_one_s: relevantOneS,
+      label_one_desc_s: labelOneDescS,
+      label_two_desc_s: labelTwoDescS,
+      relevant_two_s: relevantTwoS,
+      label_one_c: labelOneC,
+      label_two_c: labelTwoC,
+      relevant_one_c: relevantOneC,
+      label_one_desc_c: labelOneDescC,
+      label_two_desc_c: labelTwoDescC,
+      relevant_two_c: relevantTwoC
     }
     const fetchCreateExpert = await CREATE_EXPERT(payload)
-    router.push(ROUTE.DASHBOARD + '?back=true')
+    if (getCurrentIndexApp(app?.category_id, app?.app_id) === getLenghtOfAppInCategory(app?.category_id)) {
+      router.push(ROUTE.DASHBOARD + '?back=true')
+    } else {
+      nextApp()
+    }
   };
 
   const init = async () => {
@@ -230,12 +228,18 @@ export default function Expert() {
 
     let foundExperts = fetchExperts?.filter((item: any) => item?.app_id.toString() === (searchParams.get('appId') || '1'));
     if (foundExperts[foundExperts?.length - 1]) {
-      setLabelOne(foundExperts[foundExperts?.length - 1]?.label_one)
-      setLabelTwo(foundExperts[foundExperts?.length - 1]?.label_two)
-      setRelevantOne(foundExperts[foundExperts?.length - 1]?.relevant_one)
-      setLabelOneDesc(foundExperts[foundExperts?.length - 1]?.label_one_desc)
-      setLabelTwoDesc(foundExperts[foundExperts?.length - 1]?.label_two_desc)
-      setRelevantTwo(foundExperts[foundExperts?.length - 1]?.relevant_two)
+      setLabelOneS(foundExperts[foundExperts?.length - 1]?.label_one_s)
+      setLabelTwoS(foundExperts[foundExperts?.length - 1]?.label_two_s)
+      setRelevantOneS(foundExperts[foundExperts?.length - 1]?.relevant_one_s)
+      setLabelOneDescS(foundExperts[foundExperts?.length - 1]?.label_one_desc_s)
+      setLabelTwoDescS(foundExperts[foundExperts?.length - 1]?.label_two_desc_s)
+      setRelevantTwoS(foundExperts[foundExperts?.length - 1]?.relevant_two_s)
+      setLabelOneC(foundExperts[foundExperts?.length - 1]?.label_one_c)
+      setLabelTwoC(foundExperts[foundExperts?.length - 1]?.label_two_c)
+      setRelevantOneC(foundExperts[foundExperts?.length - 1]?.relevant_one_c)
+      setLabelOneDescC(foundExperts[foundExperts?.length - 1]?.label_one_desc_c)
+      setLabelTwoDescC(foundExperts[foundExperts?.length - 1]?.label_two_desc_c)
+      setRelevantTwoC(foundExperts[foundExperts?.length - 1]?.relevant_two_c)
     }
   };
 
@@ -244,7 +248,7 @@ export default function Expert() {
     init();
   }, []);
 
-  useEffect(() => { }, [app, apps, experts, openAlert, labelOne, labelTwo, relevantOne, labelOneDesc, labelTwoDesc, relevantTwo]);
+  useEffect(() => { }, [app, apps, experts, openAlert, labelOneS, labelTwoS, relevantOneS, labelOneDescS, labelTwoDescS, relevantTwoS, labelOneC, labelTwoC, relevantOneC, labelOneDescC, labelTwoDescC, relevantTwoC]);
 
   if (!isMounted) {
     return null;
@@ -279,18 +283,26 @@ export default function Expert() {
             </div>
             <div className="flex justify-end items-center gap-2">
               <h1 className="text-[16px]">{getCategoryName(app?.category_id)}: <strong>{getCurrentIndexApp(app?.category_id, app?.app_id)}/{getLenghtOfAppInCategory(app?.category_id)}</strong></h1>
-              <button
-                onClick={prevApp}
-                className="cursor-pointer hover:opacity-80 flex justify-start items-center bg-gray-200 py-1 px-2 rounded-lg gap-2"
-              >
-                <ArrowBackIcon />
-              </button>
-              <button
-                onClick={nextApp}
-                className="cursor-pointer hover:opacity-80 flex justify-start items-center bg-gray-200 py-1 px-2 rounded-lg gap-2"
-              >
-                <ArrowForwardIcon />
-              </button>
+              {
+                getCurrentIndexApp(app?.category_id, app?.app_id) !== 1 && (
+                  <button
+                    onClick={prevApp}
+                    className="cursor-pointer hover:opacity-80 flex justify-start items-center bg-gray-200 py-1 px-2 rounded-lg gap-2"
+                  >
+                    <ArrowBackIcon />
+                  </button>
+                )
+              }
+              {
+                getCurrentIndexApp(app?.category_id, app?.app_id) !== getLenghtOfAppInCategory(app?.category_id) && (
+                  <button
+                    onClick={nextApp}
+                    className="cursor-pointer hover:opacity-80 flex justify-start items-center bg-gray-200 py-1 px-2 rounded-lg gap-2"
+                  >
+                    <ArrowForwardIcon />
+                  </button>
+                )
+              }
             </div>
           </div>
           <div className="w-full flex justify-center items-center text-center mt-4">
@@ -372,81 +384,166 @@ export default function Expert() {
             </div>
           </div>
         </div>
-        <div className="w-full mt-10 flex flex-col justify-center items-center gap-4">
+        <div className="w-full flex justify-start items-center mt-8 mb-4">
+          <h1 className="text-lg text-gray-700 font-bold">Let me know what you think about Data Shared.</h1>
+        </div>
+        <div className="w-full flex flex-col justify-center items-center gap-4">
           <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
             <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
-              <div className="w-full flex flex-col items-center justify-center">
-                <button onClick={() => setLabelOne('')} className={`py-6 w-full bg-red-200 border border-red-400 rounded-md`}>Clear</button>
-              </div>
-              <div className="w-full flex flex-col items-center justify-center gap-4">
-                <button onClick={() => setLabelOne('Correct')} className={`py-2 w-full ${labelOne === 'Correct' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-gray-200'} rounded-md`}>Correct</button>
-                <button onClick={() => setLabelOne('Incorrect')} className={`py-2 w-full ${labelOne === 'Incorrect' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-gray-200'} rounded-md`}>Incorrect</button>
+              <div className="w-full flex flex-col items-center justify-center gap-2">
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelOneS('Correct')} className={`py-2 w-full ${labelOneS === 'Correct' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Correct</button>
+                  <button onClick={() => setLabelOneS('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelOneS('Incorrect')} className={`py-2 w-full ${labelOneS === 'Incorrect' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Incorrect</button>
+                  <button onClick={() => setLabelOneS('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
               </div>
             </div>
-            <div className="w-5/6 pr-4 flex items-center justify-center grid grid-cols-2 gap-4">
-              <div className="bg-gray-100 flex border border-[2px] border-gray-300 rounded-lg pr-10 pb-10 my-4 pl-2 pt-2">
-                <input
-                  type="text"
-                  placeholder="Enter your the reason . . ."
-                  onChange={(e: any) => {
-                    setLabelOneDesc(e.target.value)
-                  }}
-                  value={labelOneDesc}
-                  className="pl-2 py-2 w-full bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none border-transparent focus:border-transparent focus:ring-0"
-                />
-              </div>
-              <div className="bg-gray-100 flex border border-[2px] border-gray-300 rounded-lg pr-10 pb-10 my-4 pl-2 pt-2">
-                <input
-                  type="text"
-                  placeholder="Enter the relevant . . ."
-                  onChange={(e: any) => {
-                    setRelevantOne(e.target.value)
-                  }}
-                  value={relevantOne}
-                  className="pl-2 py-2 w-full bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none border-transparent focus:border-transparent focus:ring-0"
-                />
-              </div>
+            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the reason . . ."
+                onChange={(e: any) => {
+                  setLabelOneDescS(e.target.value)
+                }}
+                value={labelOneDescS}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the relevant . . ."
+                onChange={(e: any) => {
+                  setRelevantOneS(e.target.value)
+                }}
+                value={relevantOneS}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
             </div>
           </div>
           <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
             <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
-              <div className="w-full flex flex-col items-center justify-center">
-                <button onClick={() => setLabelTwo('')} className={`py-6 w-full bg-red-200 border border-red-400 rounded-md`}>Clear</button>
-              </div>
-              <div className="w-full flex flex-col items-center justify-center gap-4">
-                <button onClick={() => setLabelTwo('Complete')} className={`py-2 w-full ${labelTwo === 'Complete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-gray-200'} rounded-md`}>Complete</button>
-                <button onClick={() => setLabelTwo('Incomplete')} className={`py-2 w-full ${labelTwo === 'Incomplete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-gray-200'} rounded-md`}>Incomplete</button>
+              <div className="w-full flex flex-col items-center justify-center gap-2">
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelTwoS('Complete')} className={`py-2 w-full ${labelTwoS === 'Complete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Complete</button>
+                  <button onClick={() => setLabelTwoS('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelTwoS('Incomplete')} className={`py-2 w-full ${labelTwoS === 'Incomplete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Incomplete</button>
+                  <button onClick={() => setLabelTwoS('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
               </div>
             </div>
-            <div className="w-5/6 pr-4 flex items-center justify-center grid grid-cols-2 gap-4">
-              <div className="bg-gray-100 flex border border-[2px] border-gray-300 rounded-lg pr-10 pb-10 my-4 pl-2 pt-2">
-                <input
-                  type="text"
-                  placeholder="Enter your the reason . . ."
-                  onChange={(e: any) => {
-                    setLabelTwoDesc(e.target.value)
-                  }}
-                  value={labelTwoDesc}
-                  className="pl-2 py-2 w-full bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none border-transparent focus:border-transparent focus:ring-0"
-                />
-              </div>
-              <div className="bg-gray-100 flex border border-[2px] border-gray-300 rounded-lg pr-10 pb-10 my-4 pl-2 pt-2">
-                <input
-                  type="text"
-                  placeholder="Enter the relevant . . ."
-                  onChange={(e: any) => {
-                    setRelevantTwo(e.target.value)
-                  }}
-                  value={relevantTwo}
-                  className="pl-2 py-2 w-full bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none border-transparent focus:border-transparent focus:ring-0"
-                />
-              </div>
+            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the reason . . ."
+                onChange={(e: any) => {
+                  setLabelTwoDescS(e.target.value)
+                }}
+                value={labelTwoDescS}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the relevant . . ."
+                onChange={(e: any) => {
+                  setRelevantTwoS(e.target.value)
+                }}
+                value={relevantTwoS}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
             </div>
           </div>
         </div>
+
+        <div className="w-full flex justify-start items-center mt-8 mb-4">
+          <h1 className="text-lg text-gray-700 font-bold">Let me know what you think about Data Collected.</h1>
+        </div>
+
+        <div className="w-full flex flex-col justify-center items-center gap-4">
+          <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
+            <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
+              <div className="w-full flex flex-col items-center justify-center gap-2">
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelOneC('Correct')} className={`py-2 w-full ${labelOneC === 'Correct' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Correct</button>
+                  <button onClick={() => setLabelOneC('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelOneC('Incorrect')} className={`py-2 w-full ${labelOneC === 'Incorrect' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Incorrect</button>
+                  <button onClick={() => setLabelOneC('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
+              </div>
+            </div>
+            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the reason . . ."
+                onChange={(e: any) => {
+                  setLabelOneDescC(e.target.value)
+                }}
+                value={labelOneDescC}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the relevant . . ."
+                onChange={(e: any) => {
+                  setRelevantOneC(e.target.value)
+                }}
+                value={relevantOneC}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
+            </div>
+          </div>
+          <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
+            <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
+              <div className="w-full flex flex-col items-center justify-center gap-2">
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelTwoC('Complete')} className={`py-2 w-full ${labelTwoC === 'Complete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Complete</button>
+                  <button onClick={() => setLabelTwoC('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
+                <div className="w-full flex items-center justify-center gap-2">
+                  <button onClick={() => setLabelTwoC('Incomplete')} className={`py-2 w-full ${labelTwoC === 'Incomplete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Incomplete</button>
+                  <button onClick={() => setLabelTwoC('')} className="py-2 w-1/5 bg-gray-100 border border-2 border-[#eee] rounded-md"><CloseIcon /></button>
+                </div>
+              </div>
+            </div>
+            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the reason . . ."
+                onChange={(e: any) => {
+                  setLabelTwoDescC(e.target.value)
+                }}
+                value={labelTwoDescC}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
+              <textarea
+                rows={4}
+                cols={50}
+                placeholder="Enter your the relevant . . ."
+                onChange={(e: any) => {
+                  setRelevantTwoC(e.target.value)
+                }}
+                value={relevantTwoC}
+                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="w-full flex justify-center items-center gap-6">
           <div onClick={handleSubmit} className="py-2 px-20 bg-blue-500 flex justify-center items-center mt-10 rounded-md cursor-pointer hover:opacity-70">
-            <h1 className="text-[18px] text-white font-bold">Submit</h1>
+            <h1 className="text-[18px] text-white font-bold">Save App</h1>
           </div>
         </div>
       </div>
