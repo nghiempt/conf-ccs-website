@@ -66,6 +66,8 @@ export default function Expert() {
     let dataCollected = validJsonString.data_collected;
     let result: any = [];
     if (status === 'shared') {
+      console.log(dataShared);
+      console.log(dataCollected);
       for (let i = 0; i < dataShared.length; i++) {
         result.push(
           <button
@@ -79,6 +81,8 @@ export default function Expert() {
                   <strong>Data Type:</strong> {item?.data_type}
                   <br />
                   <strong>Purpose:</strong> {item?.purpose}
+                  <br />
+                  <strong>Optional:</strong> {item?.optional?.toString()}
                 </div>
               )
             })}
@@ -99,6 +103,8 @@ export default function Expert() {
                   <strong>Data Type:</strong> {item?.data_type}
                   <br />
                   <strong>Purpose:</strong> {item?.purpose}
+                  <br />
+                  <strong>Optional:</strong> {item?.optional?.toString()}
                 </div>
               )
             })}
@@ -114,8 +120,6 @@ export default function Expert() {
       case 1:
         return 'Art & Design';
       case 2:
-        return 'Auto & Vehicles';
-      case 3:
         return 'Beauty';
     }
   }
@@ -124,16 +128,12 @@ export default function Expert() {
     return apps?.filter((item: any) => item?.category_id === category_id).length;
   }
 
-  const getCurrentIndexApp = (category_id: number, app_id: any) => {
-    apps?.filter((item: any) => item?.category_id === category_id);
-    let index = 0;
-    for (let i = 0; i < apps?.length; i++) {
-      if (apps[i]?.app_id === app_id) {
-        index = i;
-        break;
-      }
-    }
-    return index + 1;
+  const getCurrentIndexApp = (apps: any, category_id: any, app: any) => {
+    let tmp = apps?.filter((item: any) => item?.category_id === category_id);
+    tmp = tmp.sort((a: any, b: any) => {
+      return a.app_id - b.app_id;
+    });
+    return tmp.indexOf(app) + 1;
   }
 
   const askGPT = async (text: string) => {
@@ -209,8 +209,8 @@ export default function Expert() {
       relevant_two_c: relevantTwoC
     }
     const fetchCreateExpert = await CREATE_EXPERT(payload)
-    if (getCurrentIndexApp(app?.category_id, app?.app_id) === getLenghtOfAppInCategory(app?.category_id)) {
-      router.push(ROUTE.DASHBOARD + '?back=true')
+    if (getCurrentIndexApp(apps, app?.category_id, app) === getLenghtOfAppInCategory(app?.category_id)) {
+      router.push(ROUTE.DASHBOARD + '?back=true&category=' + app?.category_id)
     } else {
       nextApp()
     }
@@ -226,20 +226,28 @@ export default function Expert() {
     const fetchExperts = await GET_ALL_EXPERTS()
     setExperts(fetchExperts || []);
 
-    let foundExperts = fetchExperts?.filter((item: any) => item?.app_id.toString() === (searchParams.get('appId') || '1'));
-    if (foundExperts[foundExperts?.length - 1]) {
-      setLabelOneS(foundExperts[foundExperts?.length - 1]?.label_one_s)
-      setLabelTwoS(foundExperts[foundExperts?.length - 1]?.label_two_s)
-      setRelevantOneS(foundExperts[foundExperts?.length - 1]?.relevant_one_s)
-      setLabelOneDescS(foundExperts[foundExperts?.length - 1]?.label_one_desc_s)
-      setLabelTwoDescS(foundExperts[foundExperts?.length - 1]?.label_two_desc_s)
-      setRelevantTwoS(foundExperts[foundExperts?.length - 1]?.relevant_two_s)
-      setLabelOneC(foundExperts[foundExperts?.length - 1]?.label_one_c)
-      setLabelTwoC(foundExperts[foundExperts?.length - 1]?.label_two_c)
-      setRelevantOneC(foundExperts[foundExperts?.length - 1]?.relevant_one_c)
-      setLabelOneDescC(foundExperts[foundExperts?.length - 1]?.label_one_desc_c)
-      setLabelTwoDescC(foundExperts[foundExperts?.length - 1]?.label_two_desc_c)
-      setRelevantTwoC(foundExperts[foundExperts?.length - 1]?.relevant_two_c)
+    let foundExperts: any = fetchExperts?.find((item: any) => {
+      if (
+        (item?.app_id.toString() === (searchParams.get('appId') || '1')
+          &&
+          item?.account_id.toString() === (JSON.parse(account || '')?.account_id.toString()))
+      ) {
+        return item
+      }
+    });
+    if (foundExperts) {
+      setLabelOneS(foundExperts?.label_one_s)
+      setLabelTwoS(foundExperts?.label_two_s)
+      setRelevantOneS(foundExperts?.relevant_one_s)
+      setLabelOneDescS(foundExperts?.label_one_desc_s)
+      setLabelTwoDescS(foundExperts?.label_two_desc_s)
+      setRelevantTwoS(foundExperts?.relevant_two_s)
+      setLabelOneC(foundExperts?.label_one_c)
+      setLabelTwoC(foundExperts?.label_two_c)
+      setRelevantOneC(foundExperts?.relevant_one_c)
+      setLabelOneDescC(foundExperts?.label_one_desc_c)
+      setLabelTwoDescC(foundExperts?.label_two_desc_c)
+      setRelevantTwoC(foundExperts?.relevant_two_c)
     }
   };
 
@@ -267,7 +275,7 @@ export default function Expert() {
           <div className="flex flex justify-center items-center grid grid-cols-3">
             <div className="flex">
               <a
-                href="/dashboard?back=true"
+                href={`/dashboard?back=true&category=${app?.category_id}`}
                 className="cursor-pointer hover:opacity-80 flex justify-start items-center bg-gray-200 py-1 px-4 rounded-lg gap-2"
               >
                 <ArrowBackIcon />
@@ -282,9 +290,9 @@ export default function Expert() {
               </div>
             </div>
             <div className="flex justify-end items-center gap-2">
-              <h1 className="text-[16px]">{getCategoryName(app?.category_id)}: <strong>{getCurrentIndexApp(app?.category_id, app?.app_id)}/{getLenghtOfAppInCategory(app?.category_id)}</strong></h1>
+              <h1 className="text-[16px]">{getCategoryName(app?.category_id)}: <strong>{getCurrentIndexApp(apps, app?.category_id, app)}/{getLenghtOfAppInCategory(app?.category_id)}</strong></h1>
               {
-                getCurrentIndexApp(app?.category_id, app?.app_id) !== 1 && (
+                getCurrentIndexApp(apps, app?.category_id, app) !== 1 && (
                   <button
                     onClick={prevApp}
                     className="cursor-pointer hover:opacity-80 flex justify-start items-center bg-gray-200 py-1 px-2 rounded-lg gap-2"
@@ -294,7 +302,7 @@ export default function Expert() {
                 )
               }
               {
-                getCurrentIndexApp(app?.category_id, app?.app_id) !== getLenghtOfAppInCategory(app?.category_id) && (
+                getCurrentIndexApp(apps, app?.category_id, app) !== getLenghtOfAppInCategory(app?.category_id) && (
                   <button
                     onClick={nextApp}
                     className="cursor-pointer hover:opacity-80 flex justify-start items-center bg-gray-200 py-1 px-2 rounded-lg gap-2"

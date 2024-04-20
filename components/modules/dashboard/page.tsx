@@ -10,6 +10,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { FAKE } from "@/constant/fake";
 import { useSearchParams } from "next/navigation";
+import { limitString } from "@/utils/helper";
 
 export default function Choose() {
 
@@ -22,6 +23,7 @@ export default function Choose() {
   const [experts, setExperts] = useState<any>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [isShowApps, setIsShowApps] = useState(false);
+  const [categorySelected, setCategorySelected] = useState<any>(1)
 
   function signOut() {
     Cookie.remove('isSignedIn');
@@ -34,6 +36,7 @@ export default function Choose() {
     setApps(fetchApps || []);
 
     const fetchExperts = await GET_ALL_EXPERTS()
+    console.log(fetchExperts);
     setExperts(fetchExperts || []);
   }
 
@@ -46,10 +49,36 @@ export default function Choose() {
     }
   }
 
+  const findAuthor = (appId: string) => {
+    return experts?.filter((item: any) => item?.app_id === appId);
+  }
+
+  const filterAppByCategory = (apps: any[], categoryId: any): any[] => {
+    let tmp = apps.filter(app => app.category_id === categoryId);
+    tmp = tmp.sort((a: any, b: any) => {
+      return a.app_id - b.app_id;
+    });
+    return tmp;
+  }
+
+  const renderAvatar = (index: any, authorEmail: string) => {
+    switch (authorEmail) {
+      case 'nhilt@gmail.com':
+        return <div key={index} className="bg-blue-400 text-white rounded-full text-[10px] font-semibold p-1">Nh</div>
+      case 'nghiempt@gmail.com':
+        return <div key={index} className="bg-orange-400 text-white rounded-full text-[10px] font-semibold p-1">Ng</div>
+      case 'sonhx@gmail.com':
+        return <div key={index} className="bg-red-400 text-white rounded-full text-[10px] font-semibold p-1">So</div>
+      default:
+        return '';
+    }
+  }
+
   const init = async () => {
     loadApps()
     if (searchParams.get('back') === 'true') {
       setIsShowApps(true)
+      setCategorySelected(parseInt(searchParams.get('category') || '1'))
     }
   };
 
@@ -58,7 +87,7 @@ export default function Choose() {
     init();
   }, []);
 
-  useEffect(() => { }, [apps, experts, isShowApps]);
+  useEffect(() => { }, [apps, experts, isShowApps, categorySelected]);
 
   if (!isMounted) {
     return null;
@@ -103,19 +132,32 @@ export default function Choose() {
           ?
           <div className="w-full grid grid-cols-6 gap-5 mt-10">
             {
-              apps?.map((item: any, index: any) => {
+              filterAppByCategory(apps, categorySelected)?.map((item: any, index: any) => {
                 return (
                   <Link
                     href={{
-                      pathname: ROUTE.EXPERT,
+                      pathname: !isSignedIn ? ROUTE.SIGN_IN : ROUTE.EXPERT,
                       query: { appId: item?.app_id || '0' },
                     }}
                     key={index}
-                    className={`flex justify-start items-center border ${checkStatusAppLabled(item?.app_id) ? 'bg-green-200 border-2 border-green-500' : 'border-gray-300'} py-2 px-3 rounded-lg cursor pointer hover:opacity-60 gap-2`}
+                    className={`flex flex-col justify-center items-start border ${checkStatusAppLabled(item?.app_id) ? 'bg-green-200 border-2 border-green-500' : 'border-gray-300'} py-2 px-3 rounded-lg cursor pointer hover:opacity-60 gap-2`}
                   >
-                    <Avatar alt="avatar" src={item?.app_thumbnail} />
-                    <div className="flex flex-col justify-center items-start">
-                      <h1 className={`text-[16px] font-semibold`}>{item?.app_name}</h1>
+                    <div className="flex justify-start items-center gap-2">
+                      <Avatar alt="avatar" src={item?.app_thumbnail} />
+                      <div className="flex flex-col justify-center items-start">
+                        <h1 className={`text-[16px] font-semibold`}>{limitString(item?.app_name, 5)}</h1>
+                      </div>
+                    </div>
+                    <div>
+                      <h1 className="flex gap-2">
+                        {
+                          findAuthor(item?.app_id)?.map((item: any, index: any) => {
+                            return (
+                              renderAvatar(index, item?.account_email)
+                            )
+                          })
+                        }
+                      </h1>
                     </div>
                   </Link>
                 )
@@ -130,6 +172,7 @@ export default function Choose() {
                   <div
                     key={index}
                     onClick={() => {
+                      setCategorySelected(item?.id)
                       setIsShowApps(true)
                     }}
                     className={`flex justify-center items-center ${index === 999 ? 'bg-green-300' : 'bg-gray-200'} border ${index === 999 ? 'border-green-800' : 'border-gray-400'} py-2 px-6 rounded-lg cursor-pointer hover:opacity-60`}

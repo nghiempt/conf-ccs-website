@@ -46,11 +46,11 @@ const CATEGORIES = [
     title: 'Part 1',
     category: 'Art & Design'
   },
-  // {
-  //   id: 2,
-  //   title: 'Part 2',
-  //   category: 'Art & Design'
-  // },
+  {
+    id: 2,
+    title: 'Part 2',
+    category: 'Beauty'
+  },
   // {
   //   id: 3,
   //   title: 'Part 3',
