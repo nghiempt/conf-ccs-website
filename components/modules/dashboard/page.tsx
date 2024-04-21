@@ -64,11 +64,11 @@ export default function Choose() {
   const renderAvatar = (index: any, authorEmail: string) => {
     switch (authorEmail) {
       case 'nhilt@gmail.com':
-        return <div key={index} className="bg-blue-400 text-white rounded-full text-[10px] font-semibold p-1">Nh</div>
+        return <div key={index} className="bg-blue-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">Nh</div>
       case 'nghiempt@gmail.com':
-        return <div key={index} className="bg-orange-400 text-white rounded-full text-[10px] font-semibold p-1">Ng</div>
+        return <div key={index} className="bg-orange-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">Ng</div>
       case 'sonhx@gmail.com':
-        return <div key={index} className="bg-red-400 text-white rounded-full text-[10px] font-semibold p-1">So</div>
+        return <div key={index} className="bg-red-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">So</div>
       default:
         return '';
     }
@@ -95,18 +95,18 @@ export default function Choose() {
 
   return (
     <div className="w-3/4 flex flex-col justify-center items-center pb-20">
-      <div className="flex justify-between items-center w-full">
+      <div className="flex flex-col lg:flex-row justify-between items-center w-full">
         <div className="flex justify-center items-center">
-          <h1 className="text-[24px] font-semibold">List of applications that need labeling</h1>
+          <h1 className="text-[20px] lg:text-[24px] font-semibold">List of applications that need labeling</h1>
         </div>
         {
-          isSignedIn ? <div className="flex justify-center items-center">
-            <h1 className="text-[18px] font-semibold">Hi, {JSON.parse(account || '')?.account_email} </h1>
+          isSignedIn ? <div className="flex justify-center items-center mt-2 lg:mt-0">
+            <h1 className="text-[14px] lg:text-[18px] font-semibold">Hi, {JSON.parse(account || '')?.account_email} </h1>
             <div onClick={signOut} className="ml-4 cursor-pointer"><LogoutIcon /></div>
           </div> : <Link href={{
             pathname: ROUTE.SIGN_IN
           }}>
-            <button className="bg-[rgb(var(--primary-rgb))] !text-white text-[16px] py-2 px-6 rounded-lg font-semibold">
+            <button className="bg-[rgb(var(--primary-rgb))] !text-white text-[14px] lg:text-[16px] py-2 px-6 rounded-lg font-semibold mt-4 lg:mt-0">
               Sign In
             </button>
           </Link>
@@ -130,7 +130,7 @@ export default function Choose() {
       {
         isShowApps
           ?
-          <div className="w-full grid grid-cols-6 gap-5 mt-10">
+          <div className="w-full grid grid-cols-2 lg:grid-cols-5 gap-5 mt-10">
             {
               filterAppByCategory(apps, categorySelected)?.map((item: any, index: any) => {
                 return (
@@ -140,24 +140,25 @@ export default function Choose() {
                       query: { appId: item?.app_id || '0' },
                     }}
                     key={index}
-                    className={`flex flex-col justify-center items-start border ${checkStatusAppLabled(item?.app_id) ? 'bg-green-200 border-2 border-green-500' : 'border-gray-300'} py-2 px-3 rounded-lg cursor pointer hover:opacity-60 gap-2`}
+                    className={`flex flex-col relative justify-center items-start border ${checkStatusAppLabled(item?.app_id) ? 'bg-green-200 border-2 border-green-500' : 'border-gray-300'} py-6 px-3 rounded-lg cursor pointer hover:opacity-60 gap-2`}
                   >
                     <div className="flex justify-start items-center gap-2">
                       <Avatar alt="avatar" src={item?.app_thumbnail} />
                       <div className="flex flex-col justify-center items-start">
-                        <h1 className={`text-[16px] font-semibold`}>{limitString(item?.app_name, 5)}</h1>
+                        <h1 className={`text-[14px] font-semibold`}>{limitString(item?.app_name, 16)}</h1>
                       </div>
                     </div>
-                    <div>
-                      <h1 className="flex gap-2">
-                        {
-                          findAuthor(item?.app_id)?.map((item: any, index: any) => {
-                            return (
-                              renderAvatar(index, item?.account_email)
-                            )
-                          })
-                        }
-                      </h1>
+                    <div className="flex gap-1 absolute bottom-1 right-1">
+                      {
+                        findAuthor(item?.app_id)?.map((item: any, index: any) => {
+                          return (
+                            renderAvatar(index, item?.account_email)
+                          )
+                        })
+                      }
+                    </div>
+                    <div className="absolute top-1 right-1 text-gray-700 rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">
+                      {index + 1}
                     </div>
                   </Link>
                 )
@@ -165,7 +166,7 @@ export default function Choose() {
             }
           </div>
           :
-          <div className="w-full grid grid-cols-5 gap-5 mt-10">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-5 gap-5 mt-10">
             {
               FAKE.CATEGORIES?.map((item: any, index: any) => {
                 return (

@@ -43,12 +43,12 @@ const APPS = [
 const CATEGORIES = [
   {
     id: 1,
-    title: 'Part 1',
+    title: '200 Apps',
     category: 'Art & Design'
   },
   {
     id: 2,
-    title: 'Part 2',
+    title: '200 Apps',
     category: 'Beauty'
   },
   // {

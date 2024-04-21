@@ -272,7 +272,7 @@ export default function Expert() {
       />
       <div className="w-full flex flex-col justify-center items-center pb-10">
         <div className="w-full text-center">
-          <div className="flex flex justify-center items-center grid grid-cols-3">
+          <div className="flex justify-center items-center grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-0">
             <div className="flex">
               <a
                 href={`/dashboard?back=true&category=${app?.category_id}`}
@@ -322,7 +322,7 @@ export default function Expert() {
             </h1>
           </div>
         </div>
-        <div className="w-full grid grid-cols-2 gap-4 mt-10">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-10">
           <div className="border border-gray-300 flex flex-col justify-start items-center rounded-md px-2">
             <div className="w-full py-4 bg-green-500 flex justify-center items-center mt-2 rounded-md gap-2">
               <h1 className="text-[18px] text-white font-bold">Data Safety</h1>
@@ -396,8 +396,8 @@ export default function Expert() {
           <h1 className="text-lg text-gray-700 font-bold">Let me know what you think about Data Shared.</h1>
         </div>
         <div className="w-full flex flex-col justify-center items-center gap-4">
-          <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
-            <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
+          <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-4 border border-gray-300 rounded-lg">
+            <div className="w-5/6 lg:w-1/6 flex flex-row items-center justify-center lg:pl-4 gap-4 mt-4 lg:mt-0">
               <div className="w-full flex flex-col items-center justify-center gap-2">
                 <div className="w-full flex items-center justify-center gap-2">
                   <button onClick={() => setLabelOneS('Correct')} className={`py-2 w-full ${labelOneS === 'Correct' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Correct</button>
@@ -409,7 +409,7 @@ export default function Expert() {
                 </div>
               </div>
             </div>
-            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+            <div className="w-5/6 lg:pr-8 flex items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 pb-4 lg:py-4">
               <textarea
                 rows={4}
                 cols={50}
@@ -418,7 +418,7 @@ export default function Expert() {
                   setLabelOneDescS(e.target.value)
                 }}
                 value={labelOneDescS}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
               <textarea
                 rows={4}
@@ -428,12 +428,12 @@ export default function Expert() {
                   setRelevantOneS(e.target.value)
                 }}
                 value={relevantOneS}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
             </div>
           </div>
-          <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
-            <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
+          <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-4 border border-gray-300 rounded-lg">
+            <div className="w-5/6 lg:w-1/6 flex flex-row items-center justify-center lg:pl-4 gap-4 mt-4 lg:mt-0">
               <div className="w-full flex flex-col items-center justify-center gap-2">
                 <div className="w-full flex items-center justify-center gap-2">
                   <button onClick={() => setLabelTwoS('Complete')} className={`py-2 w-full ${labelTwoS === 'Complete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Complete</button>
@@ -445,7 +445,7 @@ export default function Expert() {
                 </div>
               </div>
             </div>
-            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+            <div className="w-5/6 lg:pr-8 flex items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 pb-4 lg:py-4">
               <textarea
                 rows={4}
                 cols={50}
@@ -454,7 +454,7 @@ export default function Expert() {
                   setLabelTwoDescS(e.target.value)
                 }}
                 value={labelTwoDescS}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
               <textarea
                 rows={4}
@@ -464,7 +464,7 @@ export default function Expert() {
                   setRelevantTwoS(e.target.value)
                 }}
                 value={relevantTwoS}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
             </div>
           </div>
@@ -475,8 +475,8 @@ export default function Expert() {
         </div>
 
         <div className="w-full flex flex-col justify-center items-center gap-4">
-          <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
-            <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
+          <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-4 border border-gray-300 rounded-lg">
+            <div className="w-5/6 lg:w-1/6 flex flex-row items-center justify-center lg:pl-4 gap-4 mt-4 lg:mt-0">
               <div className="w-full flex flex-col items-center justify-center gap-2">
                 <div className="w-full flex items-center justify-center gap-2">
                   <button onClick={() => setLabelOneC('Correct')} className={`py-2 w-full ${labelOneC === 'Correct' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Correct</button>
@@ -488,7 +488,7 @@ export default function Expert() {
                 </div>
               </div>
             </div>
-            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+            <div className="w-5/6 lg:pr-8 flex items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 pb-4 lg:py-4">
               <textarea
                 rows={4}
                 cols={50}
@@ -497,7 +497,7 @@ export default function Expert() {
                   setLabelOneDescC(e.target.value)
                 }}
                 value={labelOneDescC}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
               <textarea
                 rows={4}
@@ -507,12 +507,12 @@ export default function Expert() {
                   setRelevantOneC(e.target.value)
                 }}
                 value={relevantOneC}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
             </div>
           </div>
-          <div className="w-full flex items-center justify-center gap-4 border border-gray-300 rounded-lg">
-            <div className="w-1/6 flex flex-row items-center justify-center pl-4 gap-4">
+          <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-4 border border-gray-300 rounded-lg">
+            <div className="w-5/6 lg:w-1/6 flex flex-row items-center justify-center lg:pl-4 gap-4 mt-4 lg:mt-0">
               <div className="w-full flex flex-col items-center justify-center gap-2">
                 <div className="w-full flex items-center justify-center gap-2">
                   <button onClick={() => setLabelTwoC('Complete')} className={`py-2 w-full ${labelTwoC === 'Complete' ? 'bg-green-300 border border-green-500' : 'bg-gray-100 border border-2 border-[#eee]'} rounded-md`}>Complete</button>
@@ -524,7 +524,7 @@ export default function Expert() {
                 </div>
               </div>
             </div>
-            <div className="w-5/6 pr-8 flex items-center justify-center grid grid-cols-2 gap-8 py-4">
+            <div className="w-5/6 lg:pr-8 flex items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 pb-4 lg:py-4">
               <textarea
                 rows={4}
                 cols={50}
@@ -533,7 +533,7 @@ export default function Expert() {
                   setLabelTwoDescC(e.target.value)
                 }}
                 value={labelTwoDescC}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
               <textarea
                 rows={4}
@@ -543,7 +543,7 @@ export default function Expert() {
                   setRelevantTwoC(e.target.value)
                 }}
                 value={relevantTwoC}
-                className="pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
+                className="lg:pl-3 pt-3 w-full rounded-md border border-2 border-[#eee] bg-gray-100 placeholder-gray-500 font-medium text-gray-700 outline-none focus:border-[#aaa] focus:ring-0"
               />
             </div>
           </div>
