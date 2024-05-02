@@ -64,11 +64,19 @@ export default function Choose() {
   const renderAvatar = (index: any, authorEmail: string) => {
     switch (authorEmail) {
       case 'nhilt@gmail.com':
-        return <div key={index} className="bg-blue-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">Nh</div>
+        return <div key={index} className="bg-blue-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">N</div>
       case 'nghiempt@gmail.com':
-        return <div key={index} className="bg-orange-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">Ng</div>
+        return <div key={index} className="bg-orange-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">NP</div>
       case 'sonhx@gmail.com':
-        return <div key={index} className="bg-red-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">So</div>
+        return <div key={index} className="bg-red-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">S</div>
+      case 'quanvh@gmail.com':
+        return <div key={index} className="bg-green-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">Q</div>
+      case 'minhnln@gmail.com':
+        return <div key={index} className="bg-pink-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">M</div>
+      case 'luantc@gmail.com':
+        return <div key={index} className="bg-gray-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">L</div>
+      case 'hieunc@gmail.com':
+        return <div key={index} className="bg-purple-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">H</div>
       default:
         return '';
     }
