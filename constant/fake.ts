@@ -51,26 +51,26 @@ const CATEGORIES = [
     title: '200 Apps',
     category: 'Beauty'
   },
-  // {
-  //   id: 3,
-  //   title: 'Part 3',
-  //   category: 'Art & Design'
-  // },
-  // {
-  //   id: 4,
-  //   title: 'Part 4',
-  //   category: 'Beauty'
-  // },
-  // {
-  //   id: 5,
-  //   title: 'Part 5',
-  //   category: 'Beauty'
-  // },
-  // {
-  //   id: 6,
-  //   title: 'Part 6',
-  //   category: 'Beauty'
-  // },
+  {
+    id: 3,
+    title: 'Part 3',
+    category: 'Books & Reference'
+  },
+  {
+    id: 4,
+    title: 'Part 4',
+    category: 'Business'
+  },
+  {
+    id: 5,
+    title: 'Part 5',
+    category: 'Communication'
+  },
+  {
+    id: 6,
+    title: 'Part 6',
+    category: 'Lifestyle'
+  },
   // {
   //   id: 7,
   //   title: 'Part 7',
