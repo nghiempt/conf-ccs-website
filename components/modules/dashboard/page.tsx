@@ -65,7 +65,7 @@ export default function Choose() {
     switch (authorEmail) {
       case 'nhilt@gmail.com':
         return <div key={index} className="bg-blue-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">N</div>
-      case 'nghiempt@gmail.com':
+        case 'nghiempt2@gmail.com':
         return <div key={index} className="bg-orange-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">NP</div>
       case 'sonhx@gmail.com':
         return <div key={index} className="bg-red-400 text-white rounded-full text-[10px] font-semibold w-6 h-6 flex justify-center items-center">S</div>
