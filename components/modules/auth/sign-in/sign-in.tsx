@@ -38,7 +38,7 @@ export default function SignIn() {
   useEffect(() => { }, [email, password, openAlert])
 
   return (
-    <div className="flex justify-center items-center bg-gray-50 p-8 rounded-lg">
+    <div className="flex justify-center items-center bg-gray-50 p-8 rounded-lg shadow-md">
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={openAlert}
@@ -49,7 +49,7 @@ export default function SignIn() {
         <div className="flex items-center text-center grid grid-cols-1 gap-0">
           <div className="text-center">
             <h1 className="text-[24px] font-bold mb-4">
-              Welcome to CCS 2024 Conference
+              Welcome to USENIX Security
             </h1>
             <h1 className="text-[16px] text-gray-700 font-light mb-4">
               Sign-in to continue
@@ -82,63 +82,14 @@ export default function SignIn() {
                 />
               </div>
             </div>
-            <div className="w-full flex justify-between items-center">
-              <div className="flex justify-center items-center">
-                <Checkbox className="p-0" />
-                <h1 className="text-[14px] text-gray-700 ml-1">
-                  Saved Password
-                </h1>
-              </div>
-              <div className="">
-                <h1 className="text-[14px] text-gray-700 font-bold">
-                  Forgot Password?
-                </h1>
-              </div>
-            </div>
             <button
               type="submit"
               onClick={handleSubmit}
-              className="login-button mt-8 mb-5 w-full h-10 bg-[rgb(var(--tertiary-rgb))] rounded-lg font-bold text-[16px]"
+              className="login-button my-4 w-full h-10 bg-blue-500 hover:bg-blue-700 rounded-lg font-bold text-[16px]"
               style={{ color: "white" }}
             >
               SIGN IN
             </button>
-            <div className="flex items-center justify-center mb-8">
-              <h1 className="text-[14px] text-gray-700 mr-2">
-                Don't have an account?
-              </h1>
-              <h1
-                className="text-[14px] text-gray-700 cursor-pointer font-bold"
-              >
-                Register now
-              </h1>
-            </div>
-            <>
-              <style>{`
-                                .semi-divider-with-text::before, .semi-divider-with-text::after {
-                                    border-bottom: 2px solid rgb(var(--primary-rgb));
-                                }
-                        `}</style>
-              <Divider>
-                <h1 className="text-[12px] text-gray-700 font-bold mr-2 ml-2">
-                  hoặc
-                </h1>
-              </Divider>
-            </>
-            <div className="grid grid-cols-1 gap-4">
-              <button
-                type="submit"
-                className="span-col-1 mt-8 mb-5 w-full h-10 bg-gray-200 rounded-lg flex justify-center items-center"
-                style={{ color: "black" }}
-              >
-                <div className="flex" onClick={() => signIn("google")}>
-                  <GoogleIcon />
-                  <h1 className="text-[14px] text-gray-700 ml-2 font-semibold">
-                    Sign in with Google
-                  </h1>
-                </div>
-              </button>
-            </div>
           </div>
         </div>
       </div>

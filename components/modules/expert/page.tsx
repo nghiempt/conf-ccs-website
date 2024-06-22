@@ -121,6 +121,28 @@ export default function Expert() {
         return 'Art & Design';
       case 2:
         return 'Beauty';
+      case 3:
+        return 'Books & Reference';
+      case 4:
+        return 'Business';
+      case 5:
+        return 'Communication';
+      case 6:
+        return 'Lifestyle';
+      case 7:
+        return 'Personalization';
+      case 8:
+        return 'Photography';
+      case 9:
+        return 'Productivity';
+      case 10:
+        return 'Shopping';
+      case 11:
+        return 'Social';
+      case 12:
+        return 'Tools';
+      default:
+        return 'Unknown';
     }
   }
 

@@ -36,7 +36,6 @@ export default function Choose() {
     setApps(fetchApps || []);
 
     const fetchExperts = await GET_ALL_EXPERTS()
-    console.log(fetchExperts);
     setExperts(fetchExperts || []);
   }
 
@@ -60,6 +59,20 @@ export default function Choose() {
     });
     return tmp;
   }
+
+  const checkExpertWithCategory = (categoryId: any) => {
+    let count = 0;
+    experts.forEach((item: any) => {
+      if (item?.category_id === categoryId) {
+        count++;
+      }
+    });
+    if (count >= 100) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const renderAvatar = (index: any, authorEmail: string) => {
     switch (authorEmail) {
@@ -184,7 +197,7 @@ export default function Choose() {
                       setCategorySelected(item?.id)
                       setIsShowApps(true)
                     }}
-                    className={`flex justify-center items-center ${index === 999 ? 'bg-green-300' : 'bg-gray-200'} border ${index === 999 ? 'border-green-800' : 'border-gray-400'} py-2 px-6 rounded-lg cursor-pointer hover:opacity-60`}
+                    className={`flex justify-center items-center ${checkExpertWithCategory(item?.id) ? 'bg-blue-200' : 'bg-gray-200'} border ${index === 999 ? 'border-green-800' : 'border-gray-400'} py-2 px-6 rounded-lg cursor-pointer hover:opacity-60`}
                   >
                     <div className="flex flex-col justify-center items-center gap-2">
                       <h1 className={`text-[18px] font-semibold`}>{item?.category}</h1>

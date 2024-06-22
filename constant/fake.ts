@@ -53,174 +53,54 @@ const CATEGORIES = [
   },
   {
     id: 3,
-    title: 'Part 3',
+    title: '200 Apps',
     category: 'Books & Reference'
   },
   {
     id: 4,
-    title: 'Part 4',
+    title: '200 Apps',
     category: 'Business'
   },
   {
     id: 5,
-    title: 'Part 5',
+    title: '200 Apps',
     category: 'Communication'
   },
   {
     id: 6,
-    title: 'Part 6',
+    title: '200 Apps',
     category: 'Lifestyle'
   },
-  // {
-  //   id: 7,
-  //   title: 'Part 7',
-  //   category: 'Books & Reference'
-  // },
-  // {
-  //   id: 8,
-  //   title: 'Part 8',
-  //   category: 'Books & Reference'
-  // },
-  // {
-  //   id: 9,
-  //   title: 'Part 9',
-  //   category: 'Books & Reference'
-  // },
-  // {
-  //   id: 10,
-  //   title: 'Part 10',
-  //   category: 'Business'
-  // },
-  // {
-  //   id: 11,
-  //   title: 'Part 11',
-  //   category: 'Business'
-  // },
-  // {
-  //   id: 12,
-  //   title: 'Part 12',
-  //   category: 'Business'
-  // },
-  // {
-  //   id: 13,
-  //   title: 'Part 13',
-  //   category: 'Communication'
-  // },
-  // {
-  //   id: 14,
-  //   title: 'Part 14',
-  //   category: 'Communication'
-  // },
-  // {
-  //   id: 15,
-  //   title: 'Part 15',
-  //   category: 'Communication'
-  // },
-  // {
-  //   id: 16,
-  //   title: 'Part 16',
-  //   category: 'Lifestyle'
-  // },
-  // {
-  //   id: 17,
-  //   title: 'Part 17',
-  //   category: 'Lifestyle'
-  // },
-  // {
-  //   id: 18,
-  //   title: 'Part 18',
-  //   category: 'Lifestyle'
-  // },
-  // {
-  //   id: 19,
-  //   title: 'Part 19',
-  //   category: 'Personalization'
-  // },
-  // {
-  //   id: 20,
-  //   title: 'Part 20',
-  //   category: 'Personalization'
-  // },
-  // {
-  //   id: 21,
-  //   title: 'Part 21',
-  //   category: 'Personalization'
-  // },
-  // {
-  //   id: 22,
-  //   title: 'Part 22',
-  //   category: 'Photography'
-  // },
-  // {
-  //   id: 23,
-  //   title: 'Part 23',
-  //   category: 'Photography'
-  // },
-  // {
-  //   id: 24,
-  //   title: 'Part 24',
-  //   category: 'Photography'
-  // },
-  // {
-  //   id: 25,
-  //   title: 'Part 25',
-  //   category: 'Productivity'
-  // },
-  // {
-  //   id: 26,
-  //   title: 'Part 26',
-  //   category: 'Productivity'
-  // },
-  // {
-  //   id: 27,
-  //   title: 'Part 27',
-  //   category: 'Productivity'
-  // },
-  // {
-  //   id: 28,
-  //   title: 'Part 28',
-  //   category: 'Shopping'
-  // },
-  // {
-  //   id: 29,
-  //   title: 'Part 29',
-  //   category: 'Shopping'
-  // },
-  // {
-  //   id: 30,
-  //   title: 'Part 30',
-  //   category: 'Shopping'
-  // },
-  // {
-  //   id: 31,
-  //   title: 'Part 31',
-  //   category: 'Social'
-  // },
-  // {
-  //   id: 32,
-  //   title: 'Part 32',
-  //   category: 'Social'
-  // },
-  // {
-  //   id: 33,
-  //   title: 'Part 33',
-  //   category: 'Social'
-  // },
-  // {
-  //   id: 34,
-  //   title: 'Part 34',
-  //   category: 'Tools'
-  // },
-  // {
-  //   id: 35,
-  //   title: 'Part 35',
-  //   category: 'Tools'
-  // },
-  // {
-  //   id: 36,
-  //   title: 'Part 36',
-  //   category: 'Tools'
-  // },
+  {
+    id: 7,
+    title: '200 Apps',
+    category: 'Personalization'
+  },
+  {
+    id: 8,
+    title: '200 Apps',
+    category: 'Photography'
+  },
+  {
+    id: 9,
+    title: '200 Apps',
+    category: 'Productivity'
+  },
+  {
+    id: 10,
+    title: '200 Apps',
+    category: 'Shopping'
+  },
+  {
+    id: 11,
+    title: '200 Apps',
+    category: 'Social'
+  },
+  {
+    id: 12,
+    title: '200 Apps',
+    category: 'Tools'
+  },
 ];
 
 export const FAKE = {

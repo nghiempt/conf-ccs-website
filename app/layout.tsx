@@ -7,8 +7,8 @@ import ProvidersContext from "@/context/providers-context";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "CCS 2024",
-  description: "CCS 2024",
+  title: "USENIX Security",
+  description: "The 34th USENIX Security Symposium will take place on August 13–15, 2025, at the Seattle Convention Center in Seattle, WA, USA. The USENIX Security Symposium brings together researchers, practitioners, system programmers, and others interested in the latest advances in the security and privacy of computer systems and networks.",
 };
 
 interface RootLayoutProps {
